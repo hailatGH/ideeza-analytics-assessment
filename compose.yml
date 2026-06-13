@@ -1,0 +1,60 @@
+services:
+  web:
+    build:
+      context: .
+      target: ${DJANGO_ENV:-development}
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_ENV=${DJANGO_ENV:-development}
+      - DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@db:5432/analytics}
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=${DEBUG:-True}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-0.0.0.0,localhost,127.0.0.1}
+    stdin_open: true
+    tty: true
+    command: python manage.py runserver 0.0.0.0:8000
+    networks:
+      - default
+    depends_on:
+      db:
+        condition: service_healthy
+      init:
+        condition: service_completed_successfully
+
+  init:
+    build:
+      context: .
+      target: ${DJANGO_ENV:-development}
+    environment:
+      - DJANGO_ENV=${DJANGO_ENV:-development}
+      - DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@db:5432/analytics}
+    volumes:
+      - .:/app
+    command: /app/entrypoint.sh
+    networks:
+      - default
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:17-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=analytics
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d analytics"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
