@@ -5,6 +5,7 @@ import dj_database_url
 
 try:
     from dotenv import load_dotenv
+
     load_dotenv()
 except ImportError:
     pass
@@ -17,12 +18,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-wqkw*l7b6upw5z9#!gv^s(w^to8m!#%cd$70@%_2sgw0er6y8i")
+SECRET_KEY = os.getenv(
+    "SECRET_KEY", "django-insecure-wqkw*l7b6upw5z9#!gv^s(w^to8m!#%cd$70@%_2sgw0er6y8i"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t")
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",") if os.getenv("ALLOWED_HOSTS") else []
+ALLOWED_HOSTS = (
+    os.getenv("ALLOWED_HOSTS", "").split(",") if os.getenv("ALLOWED_HOSTS") else []
+)
 
 
 # Application definition
@@ -34,10 +39,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'rest_framework',
-    'django_filters',
-    'django_extensions',
-    'analytics',
+    "rest_framework",
+    "django_filters",
+    "django_extensions",
+    "analytics",
 ]
 
 MIDDLEWARE = [

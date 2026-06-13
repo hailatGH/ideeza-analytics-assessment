@@ -4,8 +4,8 @@ import os
 env = os.getenv("DJANGO_ENV", "development")
 
 if env == "production":
-    from .prd import *
+    from .prd import *  # noqa: F401, F403
 elif env == "staging":
-    from .stg import *
+    from .stg import *  # noqa: F401, F403
 else:
-    from .dev import *
+    from .dev import *  # noqa: F401, F403

@@ -1,6 +1,6 @@
 # IDEEZA - Senior Backend Developer Assessment
 
-This project is a technical assessment for the **Senior Backend Developer** position at **IDEEZA**. It implements a high-performance Django-based analytics service designed to provide deep insights into blog platforms. 
+This project is a technical assessment for the **Senior Backend Developer** position at **IDEEZA**. It implements a high-performance Django-based analytics service designed to provide deep insights into blog platforms.
 
 The assessment showcases proficiency in:
 - **Advanced Django ORM**: Complex aggregations, annotations, and time-series data handling.
